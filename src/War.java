@@ -85,14 +85,14 @@ public class War {
         int roundWonBy = roundResult(player1Top, player2Top);
         switch (roundWonBy) {
             case 1:
-                System.out.println("Player 1 wins");
+                System.out.println(player1.getName() + " wins the round!");
                 for (Card card : this.cardsInPlay) {
                     player1.getHand().add(card);
                 }
                 this.cardsInPlay.clear();
                 break;
             case -1:
-                System.out.println("Player 2 wins");
+                System.out.println(player2.getName() + " wins the round!");
                 for (Card card : this.cardsInPlay) {
                     player2.getHand().add(card);
                 }
@@ -104,11 +104,11 @@ public class War {
                 break;
         }
         if (player1.getHand().isEmpty()) {
-            System.out.println("Player2 Wins the Game!");
+            System.out.println(player2.getName() + " wins the game!");
             System.exit(0);
         }
         if (player2.getHand().isEmpty()) {
-            System.out.println("Player1 Wins the Game!");
+            System.out.println(player1.getName() + " wins the game!");
             System.exit(0);
         }
     }
@@ -116,33 +116,33 @@ public class War {
     public void activateWar(Player player1, Player player2, Card player1Top, Card player2Top) {
         if (player1.getHand().isEmpty()) {
             System.out.println("Deciding with " + player2.getName() + "'s next card!");
-            System.out.println("(1) Player1: " + player1Top);
-            System.out.print("(" + (player2.getHand().size() + 1) + ") Player2: " + player2Top + " ");
+            System.out.println("(1) " + player1.getName() + ": " + player1Top);
+            System.out.print("(" + (player2.getHand().size() + 1) + ") " + player2.getName() + ": " + player2Top + " ");
             player2Top = playTopCard(player2);
             System.out.println();
             roundWinner(player1, player2, player1Top, player2Top);
             return;
         } else if (player2.getHand().isEmpty()) {
             System.out.println("Deciding with " + player1.getName() + "'s next card!");
-            System.out.print("(" + (player1.getHand().size() + 1) + ") Player1: " + player1Top + " ");
+            System.out.print("(" + (player1.getHand().size() + 1) + ") " + player1.getName() + ": " + player1Top + " ");
             player1Top = playTopCard(player1);
             System.out.println();
-            System.out.println("(1) Player2: " + player2Top + " ");
+            System.out.println("(1) " + player2.getName() + ": " + player2Top);
             roundWinner(player1, player2, player1Top, player2Top);
             return;
         }
         if (bothPlayersCanWar(player1, player2)) {
-            System.out.print("Player1: " + player1Top + " ");
+            System.out.print(player1.getName() + ": " + player1Top + " ");
             playTopCard(player1, 3);
             player1Top = playTopCard(player1);
             System.out.println();
-            System.out.print("Player2: " + player2Top + " ");
+            System.out.print(player2.getName() + ": " + player2Top + " ");
             playTopCard(player2, 3);
             player2Top = playTopCard(player2);
             System.out.println();
             roundWinner(player1, player2, player1Top, player2Top);
         } else if (player1HasMore(player1, player2)) {
-            System.out.print("Player1: " + player1Top + " ");
+            System.out.print(player1.getName() + ": " + player1Top + " ");
             int cardsToPlay = player2.getHand().size();
             for (int i = 0; i < cardsToPlay - 1; i++) {
                 playTopCard(player1);
@@ -150,7 +150,7 @@ public class War {
             System.out.print(" ");
             player1Top = playTopCard(player1);
             System.out.println();
-            System.out.print("Player2: " + player2Top + " ");
+            System.out.print(player2.getName() + ": " + player2Top + " ");
             for (int i = 0; i < cardsToPlay - 1; i++) {
                 playTopCard(player2);
             }
@@ -159,7 +159,7 @@ public class War {
             System.out.println();
             roundWinner(player1, player2, player1Top, player2Top);
         } else {
-            System.out.print("Player1: " + player1Top + " ");
+            System.out.print(player1.getName() + ": " + player1Top + " ");
             int cardsToPlay = player1.getHand().size();
             for (int i = 0; i < cardsToPlay - 1; i++) {
                 playTopCard(player1);
@@ -167,7 +167,7 @@ public class War {
             System.out.print(" ");
             player1Top = playTopCard(player1);
             System.out.println();
-            System.out.print("Player2: " + player2Top + " ");
+            System.out.print(player2.getName() + ": " + player2Top + " ");
             for (int i = 0; i < cardsToPlay - 1; i++) {
                 playTopCard(player2);
             }
@@ -180,10 +180,10 @@ public class War {
 
     public void takeTurn(Player player1, Player player2) {
 
-        System.out.print("(" + player1.getHand().size() + ") Player1: ");
+        System.out.print("(" + player1.getHand().size() + ") " + player1.getName() + ": ");
         Card player1Top = playTopCard(player1);
         System.out.println();
-        System.out.print("(" + player2.getHand().size() + ") Player2: ");
+        System.out.print("(" + player2.getHand().size() + ") " + player2.getName() + ": ");
         Card player2Top = playTopCard(player2);
         System.out.println();
         roundWinner(player1, player2, player1Top, player2Top);
