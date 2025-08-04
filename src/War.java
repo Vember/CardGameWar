@@ -29,15 +29,6 @@ public class War {
         this.getTable().dealHands();
     }
 
-    public void listPlayerHand(Player player) {
-
-        System.out.print(player.getName() + "'s hand (" + player.getHand().size() + "): ");
-        for (Card card : player.getHand()) {
-            System.out.print(card + " ");
-        }
-        System.out.println();
-    }
-
     public Card playTopCard(Player player) {
 
         if (!player.getHand().isEmpty()) {
@@ -50,11 +41,11 @@ public class War {
         return null;
     }
 
-    public Card playTopCard(Player player, int howMany) {
+    public void playTopCard(Player player, int howMany) {
 
         int x = 0;
-        Card topCard = null;
-        while (true) {
+        Card topCard;
+        while (x < howMany) {
             if (!player.getHand().isEmpty()) {
                 topCard = player.getHand().getFirst();
                 System.out.print(topCard);
@@ -64,16 +55,20 @@ public class War {
             } else {
                 break;
             }
-            if (x == howMany) {
-                break;
-            }
         }
         System.out.print(" ");
-        return topCard;
     }
 
-    public int roundResult(Card player1Card, Card player2Card) {
-        return player1Card.compareTo(player2Card);
+    public Card cardsToPlay(Player player, int cardsToPlay) {
+
+        Card playerTop;
+        for (int i = 0; i < cardsToPlay - 1; i++) {
+            playTopCard(player);
+        }
+        System.out.print(" ");
+        playerTop = playTopCard(player);
+        System.out.println();
+        return playerTop;
     }
 
     public boolean bothPlayersCanWar() {
@@ -82,6 +77,22 @@ public class War {
 
     public boolean player1HasMore() {
         return this.player1.getHand().size() > this.player2.getHand().size();
+    }
+
+    public Card playerWar(Player player, Card playerTop) {
+
+        System.out.print(player.getName() + ": " + playerTop + " ");
+        playTopCard(player, 3);
+        playerTop = playTopCard(player);
+        System.out.println();
+        return playerTop;
+    }
+
+    public void regularWar(Card player1Top, Card player2Top) {
+
+        player1Top = playerWar(this.player1, player1Top);
+        player2Top = playerWar(this.player2, player2Top);
+        roundWinner(player1Top, player2Top);
     }
 
     public void player1Wins() {
@@ -108,16 +119,8 @@ public class War {
         activateWar(player1Top, player2Top);
     }
 
-    public void checkForGameEnd() {
-
-        if (player1.getHand().isEmpty()) {
-            System.out.println(player2.getName() + " wins the game!");
-            System.exit(0);
-        }
-        if (player2.getHand().isEmpty()) {
-            System.out.println(player1.getName() + " wins the game!");
-            System.exit(0);
-        }
+    public int roundResult(Card player1Card, Card player2Card) {
+        return player1Card.compareTo(player2Card);
     }
 
     public void roundWinner(Card player1Top, Card player2Top) {
@@ -129,6 +132,16 @@ public class War {
             case 0 -> playersTie(player1Top, player2Top);
         }
         checkForGameEnd();
+    }
+
+    public void lessThan5Cards(Player player, Card player1Top, Card player2Top) {
+
+        int cardsToPlay = player.getHand().size();
+        System.out.print(this.player1.getName() + ": " + player1Top + " ");
+        player1Top = cardsToPlay(player1, cardsToPlay);
+        System.out.print(this.player2.getName() + ": " + player2Top + " ");
+        player2Top = cardsToPlay(player2, cardsToPlay);
+        roundWinner(player1Top, player2Top);
     }
 
     public void lastCardPlayer1(Card player1Top, Card player2Top) {
@@ -151,59 +164,6 @@ public class War {
         roundWinner(player1Top, player2Top);
     }
 
-    public void regularWar(Card player1Top, Card player2Top) {
-
-        System.out.print(this.player1.getName() + ": " + player1Top + " ");
-        playTopCard(this.player1, 3);
-        player1Top = playTopCard(this.player1);
-        System.out.println();
-        System.out.print(player2.getName() + ": " + player2Top + " ");
-        playTopCard(this.player2, 3);
-        player2Top = playTopCard(this.player2);
-        System.out.println();
-        roundWinner(player1Top, player2Top);
-    }
-
-    public void lessThan5Player1(Card player1Top, Card player2Top) {
-
-        System.out.print(this.player1.getName() + ": " + player1Top + " ");
-        int cardsToPlay = this.player1.getHand().size();
-        for (int i = 0; i < cardsToPlay - 1; i++) {
-            playTopCard(this.player1);
-        }
-        System.out.print(" ");
-        player1Top = playTopCard(this.player1);
-        System.out.println();
-        System.out.print(this.player2.getName() + ": " + player2Top + " ");
-        for (int i = 0; i < cardsToPlay - 1; i++) {
-            playTopCard(this.player2);
-        }
-        System.out.print(" ");
-        player2Top = playTopCard(this.player2);
-        System.out.println();
-        roundWinner(player1Top, player2Top);
-    }
-
-    public void lessThan5Player2(Card player1Top, Card player2Top) {
-
-        System.out.print(this.player1.getName() + ": " + player1Top + " ");
-        int cardsToPlay = this.player2.getHand().size();
-        for (int i = 0; i < cardsToPlay - 1; i++) {
-            playTopCard(this.player1);
-        }
-        System.out.print(" ");
-        player1Top = playTopCard(this.player1);
-        System.out.println();
-        System.out.print(this.player2.getName() + ": " + player2Top + " ");
-        for (int i = 0; i < cardsToPlay - 1; i++) {
-            playTopCard(this.player2);
-        }
-        System.out.print(" ");
-        player2Top = playTopCard(this.player2);
-        System.out.println();
-        roundWinner(player1Top, player2Top);
-    }
-
     public void activateWar(Card player1Top, Card player2Top) {
 
         if (this.player1.getHand().isEmpty()) {
@@ -216,20 +176,35 @@ public class War {
         if (bothPlayersCanWar()) {
             regularWar(player1Top, player2Top);
         } else if (player1HasMore()) {
-            lessThan5Player2(player1Top, player2Top);
+            lessThan5Cards(this.player2, player1Top, player2Top);
         } else {
-            lessThan5Player1(player1Top, player2Top);
+            lessThan5Cards(this.player1, player1Top, player2Top);
         }
+    }
+
+    public void checkForGameEnd() {
+
+        if (player1.getHand().isEmpty()) {
+            System.out.println(player2.getName() + " wins the game!");
+            System.exit(0);
+        }
+        if (player2.getHand().isEmpty()) {
+            System.out.println(player1.getName() + " wins the game!");
+            System.exit(0);
+        }
+    }
+
+    public Card playersTopCard(Player player) {
+        System.out.print("(" + player.getHand().size() + ") " + player.getName() + ": ");
+        Card playerTop = playTopCard(player);
+        System.out.println();
+        return playerTop;
     }
 
     public void takeTurn() {
 
-        System.out.print("(" + this.player1.getHand().size() + ") " + this.player1.getName() + ": ");
-        Card player1Top = playTopCard(this.player1);
-        System.out.println();
-        System.out.print("(" + this.player2.getHand().size() + ") " + this.player2.getName() + ": ");
-        Card player2Top = playTopCard(this.player2);
-        System.out.println();
+        Card player1Top = playersTopCard(this.player1);
+        Card player2Top = playersTopCard(this.player2);
         roundWinner(player1Top, player2Top);
 
     }
