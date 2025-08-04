@@ -6,6 +6,7 @@ public class War {
     private final ArrayList<Card> cardsInPlay;
     private final Player player1;
     private final Player player2;
+    private int turnCount;
 
     public War() {
 
@@ -14,6 +15,7 @@ public class War {
         Deck deck = new Deck();
         this.table = new Table(deck, player1, player2);
         this.cardsInPlay = new ArrayList<>();
+        this.turnCount = 0;
 
     }
 
@@ -182,10 +184,12 @@ public class War {
 
         if (player1.getHand().isEmpty()) {
             System.out.println(player2.getName() + " wins the game!");
+            System.out.println("Game lasted " + this.turnCount + " turns!");
             System.exit(0);
         }
         if (player2.getHand().isEmpty()) {
             System.out.println(player1.getName() + " wins the game!");
+            System.out.println("Game lasted " + this.turnCount + " turns!");
             System.exit(0);
         }
     }
@@ -202,6 +206,7 @@ public class War {
         Card player1Top = playersTopCard(this.player1);
         Card player2Top = playersTopCard(this.player2);
         roundWinner(player1Top, player2Top);
+        this.turnCount++;
 
     }
 
