@@ -43,28 +43,10 @@ public class War {
         return null;
     }
 
-    public void playTopCard(Player player, int howMany) {
-
-        int x = 0;
-        Card topCard;
-        while (x < howMany) {
-            if (!player.getHand().isEmpty()) {
-                topCard = player.getHand().getFirst();
-                System.out.print(topCard);
-                this.cardsInPlay.add(topCard);
-                player.getHand().remove(player.getHand().getFirst());
-                x++;
-            } else {
-                break;
-            }
-        }
-        System.out.print(" ");
-    }
-
-    public Card cardsToPlay(Player player, int cardsToPlay) {
+    public Card playMultipleCards(Player player, int howMany) {
 
         Card playerTop;
-        for (int i = 0; i < cardsToPlay - 1; i++) {
+        for (int i = 0; i < howMany - 1; i++) {
             playTopCard(player);
         }
         System.out.print(" ");
@@ -84,7 +66,7 @@ public class War {
     public Card playerWar(Player player, Card playerTop) {
 
         System.out.print(player.getName() + ": " + playerTop + " ");
-        playTopCard(player, 3);
+        playMultipleCards(player, 3);
         playerTop = playTopCard(player);
         System.out.println();
         return playerTop;
@@ -131,9 +113,9 @@ public class War {
 
         int cardsToPlay = player.getHand().size();
         System.out.print(this.player1.getName() + ": " + player1Top + " ");
-        player1Top = cardsToPlay(player1, cardsToPlay);
+        player1Top = playMultipleCards(player1, cardsToPlay);
         System.out.print(this.player2.getName() + ": " + player2Top + " ");
-        player2Top = cardsToPlay(player2, cardsToPlay);
+        player2Top = playMultipleCards(player2, cardsToPlay);
         roundWinner(player1Top, player2Top);
     }
 
