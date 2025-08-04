@@ -95,20 +95,11 @@ public class War {
         roundWinner(player1Top, player2Top);
     }
 
-    public void player1Wins() {
+    public void playerWins(Player player) {
 
-        System.out.println(this.player1.getName() + " wins the round!");
+        System.out.println(player.getName() + " wins the round!");
         for (Card card : this.cardsInPlay) {
-            this.player1.getHand().add(card);
-        }
-        this.cardsInPlay.clear();
-    }
-
-    public void player2Wins() {
-
-        System.out.println(this.player2.getName() + " wins the round!");
-        for (Card card : this.cardsInPlay) {
-            this.player2.getHand().add(card);
+            player.getHand().add(card);
         }
         this.cardsInPlay.clear();
     }
@@ -127,11 +118,11 @@ public class War {
 
         int roundWonBy = roundResult(player1Top, player2Top);
         switch (roundWonBy) {
-            case 1 -> player1Wins();
-            case -1 -> player2Wins();
+            case 1 -> playerWins(this.player1);
+            case -1 -> playerWins(this.player2);
             case 0 -> playersTie(player1Top, player2Top);
         }
-        checkForGameEnd();
+        checkForVictor();
     }
 
     public void lessThan5Cards(Player player, Card player1Top, Card player2Top) {
@@ -182,7 +173,7 @@ public class War {
         }
     }
 
-    public void checkForGameEnd() {
+    public void checkForVictor() {
 
         if (player1.getHand().isEmpty()) {
             System.out.println(player2.getName() + " wins the game!");
