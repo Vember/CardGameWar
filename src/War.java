@@ -107,7 +107,7 @@ public class War {
     public void playersTie(Card player1Top, Card player2Top) {
 
         System.out.println("It's War!");
-        activateWar(player1Top, player2Top);
+        activateWarPart1(player1Top, player2Top);
     }
 
     public int roundResult(Card player1Card, Card player2Card) {
@@ -155,7 +155,7 @@ public class War {
         roundWinner(player1Top, player2Top);
     }
 
-    public void activateWar(Card player1Top, Card player2Top) {
+    public void activateWarPart1(Card player1Top, Card player2Top) {
 
         if (this.player1.getHand().isEmpty()) {
             lastCardPlayer1(player1Top, player2Top);
@@ -164,6 +164,11 @@ public class War {
             lastCardPlayer2(player1Top, player2Top);
             return;
         }
+        activateWarPart2(player1Top, player2Top);
+    }
+
+    public void activateWarPart2(Card player1Top, Card player2Top) {
+
         if (bothPlayersCanWar()) {
             regularWar(player1Top, player2Top);
         } else if (player1HasMore()) {
