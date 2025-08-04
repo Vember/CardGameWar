@@ -10,6 +10,11 @@ public class Deck {
 
         this.cards = new ArrayList<>();
         this.discardPile = new ArrayList<>();
+        initDeck();
+    }
+
+    public void initDeck() {
+
         String[] suits = {"s", "c", "h", "d"};
         String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
 
