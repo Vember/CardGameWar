@@ -28,7 +28,7 @@ public class War {
     }
 
     public void dealHands() {
-        this.getTable().dealHands();
+        this.table.dealHands();
     }
 
     public Card playTopCard(Player player) {
