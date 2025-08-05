@@ -25,8 +25,6 @@ public class Main {
         //Automatic turns until winner
         while (true) {
             war.takeTurn();
-            war.getPlayer1().shuffleHand();
-            war.getPlayer2().shuffleHand();
         }
     }
 }

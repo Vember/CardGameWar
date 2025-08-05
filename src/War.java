@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class War {
 
@@ -82,6 +83,7 @@ public class War {
     public void playerWins(Player player) {
 
         System.out.println(player.getName() + " wins the round!");
+        Collections.shuffle(this.cardsInPlay);
         for (Card card : this.cardsInPlay) {
             player.getHand().add(card);
         }
