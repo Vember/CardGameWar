@@ -67,9 +67,7 @@ public class War {
     public Card playerWar(Player player, Card playerTop) {
 
         System.out.print(player.getName() + ": " + playerTop + " ");
-        playMultipleCards(player, 3);
-        playerTop = playTopCard(player);
-        System.out.println();
+        playerTop = playMultipleCards(player, 4);
         return playerTop;
     }
 
@@ -103,10 +101,12 @@ public class War {
     public void roundWinner(Card player1Top, Card player2Top) {
 
         int roundWonBy = roundResult(player1Top, player2Top);
-        switch (roundWonBy) {
-            case 1 -> playerWins(this.player1);
-            case -1 -> playerWins(this.player2);
-            case 0 -> playersTie(player1Top, player2Top);
+        if (roundWonBy > 0) {
+            playerWins(this.player1);
+        } else if (roundWonBy < 0) {
+            playerWins(this.player2);
+        } else {
+            playersTie(player1Top, player2Top);
         }
         checkForVictor();
     }

@@ -7,6 +7,14 @@ public class Player {
     private final ArrayList<Card> hand;
     private int maxHandSize;
 
+    public Player() {
+
+        this.name = null;
+        this.hand = new ArrayList<>();
+        this.maxHandSize = 0;
+
+    }
+
     public Player(String name) {
 
         this.name = name;

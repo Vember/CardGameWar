@@ -15,20 +15,10 @@ public class Deck {
 
     public void initDeck() {
 
-        String[] suits = {"s", "c", "h", "d"};
-        String[] values = {"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A"};
+        for (Card.Suit suit : Card.Suit.values()) {
 
-        for (String suit : suits) {
-            String color;
-            if (suit.equals("s") || suit.equals("c")) {
-                color = "Black";
-            } else {
-                color = "Red";
-            }
-            int rank = 2;
-            for (String value : values) {
-                cards.add(new Card(color, value, suit, rank));
-                rank++;
+            for (Card.Rank rank : Card.Rank.values()) {
+                cards.add(new Card(suit, rank));
             }
         }
     }
